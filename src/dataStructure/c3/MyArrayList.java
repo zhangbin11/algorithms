@@ -23,7 +23,7 @@ public class MyArrayList<T> implements Iterable<T>{
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ArrayListIterator();
     }
 
     public MyArrayList(){
@@ -68,6 +68,27 @@ public class MyArrayList<T> implements Iterable<T>{
         return true;
     }
 
+    public boolean add(int idx,T newVal){
+        if(items.length==size()){
+            ensureCapaccity(size()*2+1);
+        }
+        for(int i=size;i>idx;i--){
+            items[i]=items[i-1];
+        }
+        items[idx]=newVal;
+        return true;
+    }
+
+    public T remove(int idx){
+        T removedItem = items[idx];
+        for(int i=idx;i<size-1;i++){
+            items[i]=items[i+1];
+        }
+        size--;
+        return removedItem;
+    }
+
+
     private void doClear(){
         size=0;
         ensureCapaccity(DEFAULT_CAPACITY);
@@ -108,7 +129,7 @@ public class MyArrayList<T> implements Iterable<T>{
 
         @Override
         public void remove() {
-
+            MyArrayList.this.remove(--current);
         }
     }
 
